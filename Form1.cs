@@ -17,9 +17,13 @@ namespace MasterMind
         int activeIndex;
         int[,] clues = new int[4, 10];
 
+        bool allowDuplicates = false;
+        bool drawRightAnswer = false;
+
         Random rnd = new Random();
 
         Color activeColor;
+        Color[] rightAnswer = new Color[4];
         Color[,] colorBoard = new Color[4, 10];
 
         Color gray = Color.DarkGray;
@@ -63,10 +67,20 @@ namespace MasterMind
                     g.FillRectangle(brush, xPos, yPos, defaultSize, defaultSize);
                 }
             }
-        }
+            if (drawRightAnswer)
+            {
+                for (int xIndex = 0, xPos = 30; xIndex < 4; xIndex++, xPos += defaultSize + 10)
+                {
+                    SolidBrush brush = new SolidBrush(rightAnswer[xIndex]);
+                    g.FillRectangle(brush, xPos, 10, defaultSize, defaultSize);
+                }
+            }
 
+        }
         void OnStart()
         {
+            GenerateAnswer();
+
             activeIndex = 0;
             activeColor = red;
 
@@ -78,25 +92,47 @@ namespace MasterMind
                 }
             }
 
+            btnCheck.Location = new Point(228, 492);
             panel1.Invalidate();
         }
+
+        void GenerateAnswer()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Color tempColor = gray;
+                do
+                {
+                    int colorIndex = rnd.Next(0, 7);
+                    switch (colorIndex)
+                    {
+                        case 0: tempColor = red; break;
+                        case 1: tempColor = blue; break;
+                        case 2: tempColor = lightGreen; break;
+                        case 3: tempColor = yellow; break;
+                        case 4: tempColor = darkBlue; break;
+                        case 5: tempColor = darkGreen; break;
+                        case 6: tempColor = orange; break;
+                        case 7: tempColor = pink; break;
+                    }
+                    if (!rightAnswer.Contains(tempColor)) break;
+
+                }while(!allowDuplicates);
+                rightAnswer[i] = tempColor;
+            }
+        }
+
+        void EndGame()
+        {
+            drawRightAnswer = true;
+            panel1.Invalidate();
+        }
+
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.X >= 30 && e.X <= 70)
+            for (int i = 0; i < 4; i++)
             {
-                colorBoard[0, activeIndex] = activeColor; ;
-            }
-            else if (e.X >= 80 && e.X <= 120)
-            {
-                colorBoard[1, activeIndex] = activeColor; ;
-            }
-            else if (e.X >= 130 && e.X <= 170)
-            {
-                colorBoard[2, activeIndex] = activeColor; ;
-            }
-            else if (e.X >= 180 && e.X <= 220)
-            {
-                colorBoard[3, activeIndex] = activeColor; ;
+                if (e.X >= 30 + i * (10 + defaultSize) && e.X <= 30 + i * (10 + defaultSize) + defaultSize) colorBoard[i, activeIndex] = activeColor;
             }
 
             panel1.Invalidate();
@@ -105,6 +141,15 @@ namespace MasterMind
         private void btnNewGame_Click(object sender, EventArgs e)
         {
             OnStart();
+        }
+        private void btnCheck_Click(object sender, EventArgs e)
+        {
+            if (activeIndex < 9)
+            {
+                activeIndex++;
+                btnCheck.Location = new Point(btnCheck.Location.X, btnCheck.Location.Y - (defaultSize + 5));
+            }
+            else EndGame();
         }
 
         private void btnRed_Click(object sender, EventArgs e)

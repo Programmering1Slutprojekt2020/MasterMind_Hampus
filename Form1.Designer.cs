@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCheck = new System.Windows.Forms.Button();
+            this.btnNewGame = new System.Windows.Forms.Button();
             this.btnPink = new System.Windows.Forms.Button();
             this.btnOrange = new System.Windows.Forms.Button();
             this.btnDarkGreen = new System.Windows.Forms.Button();
@@ -37,8 +39,6 @@
             this.btnLightGreen = new System.Windows.Forms.Button();
             this.btnBlue = new System.Windows.Forms.Button();
             this.btnRed = new System.Windows.Forms.Button();
-            this.btnNewGame = new System.Windows.Forms.Button();
-            this.btnCheck = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,6 +61,42 @@
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
+            // 
+            // btnCheck
+            // 
+            this.btnCheck.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnCheck.BackColor = System.Drawing.Color.LightGray;
+            this.btnCheck.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCheck.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.btnCheck.FlatAppearance.BorderSize = 3;
+            this.btnCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCheck.Font = new System.Drawing.Font("Gill Sans Ultra Bold", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCheck.ForeColor = System.Drawing.Color.Black;
+            this.btnCheck.Location = new System.Drawing.Point(228, 492);
+            this.btnCheck.Name = "btnCheck";
+            this.btnCheck.Size = new System.Drawing.Size(60, 30);
+            this.btnCheck.TabIndex = 10;
+            this.btnCheck.Text = "Check";
+            this.btnCheck.UseVisualStyleBackColor = false;
+            this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
+            // 
+            // btnNewGame
+            // 
+            this.btnNewGame.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnNewGame.BackColor = System.Drawing.Color.LightGray;
+            this.btnNewGame.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNewGame.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.btnNewGame.FlatAppearance.BorderSize = 3;
+            this.btnNewGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNewGame.Font = new System.Drawing.Font("Gill Sans Ultra Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNewGame.ForeColor = System.Drawing.Color.Black;
+            this.btnNewGame.Location = new System.Drawing.Point(280, 559);
+            this.btnNewGame.Name = "btnNewGame";
+            this.btnNewGame.Size = new System.Drawing.Size(67, 68);
+            this.btnNewGame.TabIndex = 9;
+            this.btnNewGame.Text = "New Game";
+            this.btnNewGame.UseVisualStyleBackColor = false;
+            this.btnNewGame.Click += new System.EventHandler(this.btnNewGame_Click);
             // 
             // btnPink
             // 
@@ -171,41 +207,6 @@
             this.btnRed.TabIndex = 1;
             this.btnRed.UseVisualStyleBackColor = false;
             this.btnRed.Click += new System.EventHandler(this.btnRed_Click);
-            // 
-            // btnNewGame
-            // 
-            this.btnNewGame.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnNewGame.BackColor = System.Drawing.Color.LightGray;
-            this.btnNewGame.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNewGame.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-            this.btnNewGame.FlatAppearance.BorderSize = 3;
-            this.btnNewGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNewGame.Font = new System.Drawing.Font("Gill Sans Ultra Bold", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNewGame.ForeColor = System.Drawing.Color.Black;
-            this.btnNewGame.Location = new System.Drawing.Point(280, 559);
-            this.btnNewGame.Name = "btnNewGame";
-            this.btnNewGame.Size = new System.Drawing.Size(67, 68);
-            this.btnNewGame.TabIndex = 9;
-            this.btnNewGame.Text = "New Game";
-            this.btnNewGame.UseVisualStyleBackColor = false;
-            this.btnNewGame.Click += new System.EventHandler(this.btnNewGame_Click);
-            // 
-            // btnCheck
-            // 
-            this.btnCheck.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnCheck.BackColor = System.Drawing.Color.LightGray;
-            this.btnCheck.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCheck.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-            this.btnCheck.FlatAppearance.BorderSize = 3;
-            this.btnCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCheck.Font = new System.Drawing.Font("Gill Sans Ultra Bold", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCheck.ForeColor = System.Drawing.Color.Black;
-            this.btnCheck.Location = new System.Drawing.Point(228, 492);
-            this.btnCheck.Name = "btnCheck";
-            this.btnCheck.Size = new System.Drawing.Size(60, 30);
-            this.btnCheck.TabIndex = 10;
-            this.btnCheck.Text = "Check";
-            this.btnCheck.UseVisualStyleBackColor = false;
             // 
             // Form1
             // 
