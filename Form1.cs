@@ -14,11 +14,12 @@ namespace MasterMind
     {
         int defaultSize = 40;
         int width, height;
-        int activeIndex;
+        int activeIndex = 0;
         int[,] clues = new int[4, 10];
 
-        bool allowDuplicates = false;
-        bool drawRightAnswer = false;
+        bool allowDoubles = false;
+        bool drawRightAnswer;
+        bool win;
 
         Random rnd = new Random();
 
@@ -26,7 +27,7 @@ namespace MasterMind
         Color[] rightAnswer = new Color[4];
         Color[,] colorBoard = new Color[4, 10];
 
-        Color gray = Color.DarkGray;
+        Color gray = Color.LightGray;
         Color red = Color.FromArgb(222, 32, 32);
         Color blue = Color.FromArgb(79, 87, 229);
         Color lightGreen = Color.FromArgb(57, 211, 25);
@@ -41,6 +42,7 @@ namespace MasterMind
             InitializeComponent();
             OnStart();
 
+            cbxAllowDoubles.Checked = false;
             width = panel1.Width;
             height = panel1.Height;
 
@@ -57,7 +59,6 @@ namespace MasterMind
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-
             //Rita colorBoard
             for (int yIndex = 9, yPos = 80; yIndex >= 0; yIndex--, yPos += defaultSize + 5)
             {
@@ -67,6 +68,31 @@ namespace MasterMind
                     g.FillRectangle(brush, xPos, yPos, defaultSize, defaultSize);
                 }
             }
+            for (int yIndex = 9, yPos = 82; yIndex >= 0; yIndex--, yPos += defaultSize + 5)
+            {
+                for (int i = 0 ; i < 2; i++)
+                {
+                    int yOffset = defaultSize / 2;
+                    for (int xIndex = 0 + 2*i, xPos = 300; xIndex < 2 + 2*i; xIndex++, xPos += defaultSize / 2)
+                    {
+                        SolidBrush brush;
+                        if (clues[xIndex, yIndex] == 2)
+                        {
+                            brush = new SolidBrush(Color.Black);
+                        }
+                        else if (clues[xIndex, yIndex] == 1)
+                        {
+                            brush = new SolidBrush(Color.Gray);
+                        }
+                        else
+                        {
+                            brush = new SolidBrush(Color.LightGray);
+                        }
+                        g.FillRectangle(brush, xPos, yPos + yOffset * i, defaultSize / 2 - 2, defaultSize / 2 - 2);
+                    }
+                }
+
+            }
             if (drawRightAnswer)
             {
                 for (int xIndex = 0, xPos = 30; xIndex < 4; xIndex++, xPos += defaultSize + 10)
@@ -75,12 +101,20 @@ namespace MasterMind
                     g.FillRectangle(brush, xPos, 10, defaultSize, defaultSize);
                 }
             }
+            if (win)
+            {
+                Font font = new Font("Consolas", 18);
+                SolidBrush brush = new SolidBrush(gray);
+                g.DrawString("Correct\nCombination!", font, brush, 225, 10);
+            }
 
         }
         void OnStart()
         {
             GenerateAnswer();
-
+            allowDoubles = cbxAllowDoubles.Checked;
+            drawRightAnswer = false;
+            win = false;
             activeIndex = 0;
             activeColor = red;
 
@@ -92,6 +126,14 @@ namespace MasterMind
                 }
             }
 
+            for (int x = 0; x < 4; x++)
+            {
+                for (int y = 0; y < 10; y++)
+                {
+                    clues[x, y] = 0;
+                }
+
+            }
             btnCheck.Location = new Point(228, 492);
             panel1.Invalidate();
         }
@@ -117,15 +159,44 @@ namespace MasterMind
                     }
                     if (!rightAnswer.Contains(tempColor)) break;
 
-                }while(!allowDuplicates);
+                } while (!allowDoubles);
                 rightAnswer[i] = tempColor;
+            }
+        }
+
+        void TestIfRight()
+        {
+            List<int> tempClues = new List<int>();
+            List<int> indexMemory = new List<int>();
+            for (int i = 0; i < 4; i++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    if (colorBoard[i,activeIndex] == rightAnswer[k] && !indexMemory.Contains(k))
+                    {
+                        if (i == k) tempClues.Add(2);
+                        else tempClues.Add(1);
+                        indexMemory.Add(k);
+                        break;
+                    }
+                }
+            }
+            tempClues.Sort();
+            tempClues.Reverse();
+            for (int i = 0; i < tempClues.Count(); i++)
+            {
+                clues[i, activeIndex] = tempClues[i];
+            }
+            if (tempClues.Sum() == 8)
+            {
+                win = true;
+                EndGame();
             }
         }
 
         void EndGame()
         {
             drawRightAnswer = true;
-            panel1.Invalidate();
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
@@ -144,12 +215,15 @@ namespace MasterMind
         }
         private void btnCheck_Click(object sender, EventArgs e)
         {
+            TestIfRight();
             if (activeIndex < 9)
             {
                 activeIndex++;
                 btnCheck.Location = new Point(btnCheck.Location.X, btnCheck.Location.Y - (defaultSize + 5));
             }
             else EndGame();
+
+            panel1.Invalidate();
         }
 
         private void btnRed_Click(object sender, EventArgs e)

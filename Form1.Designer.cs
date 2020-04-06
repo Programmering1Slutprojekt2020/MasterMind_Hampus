@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbxAllowDoubles = new System.Windows.Forms.CheckBox();
             this.btnCheck = new System.Windows.Forms.Button();
             this.btnNewGame = new System.Windows.Forms.Button();
             this.btnPink = new System.Windows.Forms.Button();
@@ -45,6 +46,7 @@
             // panel1
             // 
             this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.panel1.Controls.Add(this.cbxAllowDoubles);
             this.panel1.Controls.Add(this.btnCheck);
             this.panel1.Controls.Add(this.btnNewGame);
             this.panel1.Controls.Add(this.btnPink);
@@ -61,6 +63,16 @@
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
+            // 
+            // cbxAllowDoubles
+            // 
+            this.cbxAllowDoubles.AutoSize = true;
+            this.cbxAllowDoubles.Location = new System.Drawing.Point(280, 633);
+            this.cbxAllowDoubles.Name = "cbxAllowDoubles";
+            this.cbxAllowDoubles.Size = new System.Drawing.Size(93, 17);
+            this.cbxAllowDoubles.TabIndex = 1;
+            this.cbxAllowDoubles.Text = "Allow Doubles";
+            this.cbxAllowDoubles.UseVisualStyleBackColor = true;
             // 
             // btnCheck
             // 
@@ -218,6 +230,7 @@
             this.Name = "Form1";
             this.Text = "MasterMind";
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -235,6 +248,7 @@
         public System.Windows.Forms.Button btnDarkGreen;
         public System.Windows.Forms.Button btnDarkBlue;
         public System.Windows.Forms.Button btnCheck;
+        private System.Windows.Forms.CheckBox cbxAllowDoubles;
     }
 }
 
