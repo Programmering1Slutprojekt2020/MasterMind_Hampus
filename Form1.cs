@@ -15,11 +15,13 @@ namespace MasterMind
         int defaultSize = 40;
         int width, height;
         int activeIndex = 0;
+        int scorePoints = 0;
         int[,] clues = new int[4, 10];
 
         bool allowDoubles = false;
         bool drawRightAnswer;
         bool win;
+        bool highlightMissingBox;
 
         Random rnd = new Random();
 
@@ -68,6 +70,7 @@ namespace MasterMind
                     g.FillRectangle(brush, xPos, yPos, defaultSize, defaultSize);
                 }
             }
+            //Rita Clues
             for (int yIndex = 9, yPos = 82; yIndex >= 0; yIndex--, yPos += defaultSize + 5)
             {
                 for (int i = 0 ; i < 2; i++)
@@ -95,28 +98,51 @@ namespace MasterMind
             }
             if (drawRightAnswer)
             {
+                Color winColor = Color.IndianRed;
+                string winText = "   Wrong\nCombination!";
+
                 for (int xIndex = 0, xPos = 30; xIndex < 4; xIndex++, xPos += defaultSize + 10)
                 {
                     SolidBrush brush = new SolidBrush(rightAnswer[xIndex]);
                     g.FillRectangle(brush, xPos, 10, defaultSize, defaultSize);
                 }
-            }
-            if (win)
-            {
+
+                if (win)
+                {
+                    winColor = Color.DarkSeaGreen;
+                    winText = "  Correct\nCombination!";
+                }
+                SolidBrush winBrush = new SolidBrush(winColor);
+                g.FillRectangle(winBrush, 110, 200, 180, 80);
+
                 Font font = new Font("Consolas", 18);
-                SolidBrush brush = new SolidBrush(gray);
-                g.DrawString("Correct\nCombination!", font, brush, 225, 10);
+                SolidBrush winTextBrush = new SolidBrush(Color.White);
+                g.DrawString(winText, font, winTextBrush, 118, 210);
+            }
+            if (highlightMissingBox)
+            {
+                Pen highlighter = new Pen(Color.Black);
+                highlighter.Width = 3;
+                for (int i = 0; i < 4; i++)
+                {
+                    if(colorBoard[i,activeIndex] == gray)
+                    {
+                        g.DrawRectangle(highlighter, 30 + i * (defaultSize + 10), 485 - activeIndex * (defaultSize + 5), defaultSize, defaultSize);
+                    }
+                }
             }
 
         }
         void OnStart()
         {
-            GenerateAnswer();
             allowDoubles = cbxAllowDoubles.Checked;
             drawRightAnswer = false;
+            btnCheck.Enabled = true;
+            highlightMissingBox = false;
             win = false;
             activeIndex = 0;
             activeColor = red;
+            GenerateAnswer();
 
             for (int y = 0; y < 10; y++)
             {
@@ -190,6 +216,7 @@ namespace MasterMind
             if (tempClues.Sum() == 8)
             {
                 win = true;
+                scorePoints++;
                 EndGame();
             }
         }
@@ -197,6 +224,8 @@ namespace MasterMind
         void EndGame()
         {
             drawRightAnswer = true;
+            lblScore.Text = "Score: " + scorePoints;
+            btnCheck.Enabled = false;
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
@@ -215,6 +244,15 @@ namespace MasterMind
         }
         private void btnCheck_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < 4; i++)
+            {
+                if (colorBoard[i, activeIndex] == gray)
+                {
+                    highlightMissingBox = true;
+                    panel1.Invalidate();
+                    return;
+                }
+            }
             TestIfRight();
             if (activeIndex < 9)
             {
@@ -222,7 +260,7 @@ namespace MasterMind
                 btnCheck.Location = new Point(btnCheck.Location.X, btnCheck.Location.Y - (defaultSize + 5));
             }
             else EndGame();
-
+            highlightMissingBox = false;
             panel1.Invalidate();
         }
 

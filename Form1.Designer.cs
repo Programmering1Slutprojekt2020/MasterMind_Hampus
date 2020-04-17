@@ -40,12 +40,14 @@
             this.btnLightGreen = new System.Windows.Forms.Button();
             this.btnBlue = new System.Windows.Forms.Button();
             this.btnRed = new System.Windows.Forms.Button();
+            this.lblScore = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.panel1.Controls.Add(this.lblScore);
             this.panel1.Controls.Add(this.cbxAllowDoubles);
             this.panel1.Controls.Add(this.btnCheck);
             this.panel1.Controls.Add(this.btnNewGame);
@@ -67,9 +69,10 @@
             // cbxAllowDoubles
             // 
             this.cbxAllowDoubles.AutoSize = true;
-            this.cbxAllowDoubles.Location = new System.Drawing.Point(280, 633);
+            this.cbxAllowDoubles.Font = new System.Drawing.Font("Gill Sans Ultra Bold", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxAllowDoubles.Location = new System.Drawing.Point(250, 633);
             this.cbxAllowDoubles.Name = "cbxAllowDoubles";
-            this.cbxAllowDoubles.Size = new System.Drawing.Size(93, 17);
+            this.cbxAllowDoubles.Size = new System.Drawing.Size(124, 22);
             this.cbxAllowDoubles.TabIndex = 1;
             this.cbxAllowDoubles.Text = "Allow Doubles";
             this.cbxAllowDoubles.UseVisualStyleBackColor = true;
@@ -220,6 +223,16 @@
             this.btnRed.UseVisualStyleBackColor = false;
             this.btnRed.Click += new System.EventHandler(this.btnRed_Click);
             // 
+            // lblScore
+            // 
+            this.lblScore.AutoSize = true;
+            this.lblScore.Font = new System.Drawing.Font("Gill Sans Ultra Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblScore.Location = new System.Drawing.Point(245, 16);
+            this.lblScore.Name = "lblScore";
+            this.lblScore.Size = new System.Drawing.Size(120, 30);
+            this.lblScore.TabIndex = 11;
+            this.lblScore.Text = "Score: 0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -249,6 +262,7 @@
         public System.Windows.Forms.Button btnDarkBlue;
         public System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.CheckBox cbxAllowDoubles;
+        private System.Windows.Forms.Label lblScore;
     }
 }
 
